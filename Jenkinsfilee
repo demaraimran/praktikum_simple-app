@@ -12,10 +12,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                     script {
-                        bat "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"
-                        bat "docker push dewantirani/simple-app:%BUILD_NUMBER%"
-                        bat "docker tag dewantirani/simple-app:%BUILD_NUMBER% dewantirani/simple-app:latest"
-                        bat "docker push dewantirani/simple-app:latest"
+                        bat 'cmd /c "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"'
+                        bat 'docker push dewantirani/simple-app:%BUILD_NUMBER%'
+                        bat 'docker tag dewantirani/simple-app:%BUILD_NUMBER% dewantirani/simple-app:latest'
+                        bat 'docker push dewantirani/simple-app:latest'
                     }
                 }
             }
