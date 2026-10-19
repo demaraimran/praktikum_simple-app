@@ -4,7 +4,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t dewantirani/simple-app:${env.BUILD_NUMBER} .'
+                    bat 'docker build -t dewantirani/simple-app:%BUILD_NUMBER% .'
                 }
             }
         }
@@ -12,10 +12,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                     script {
-                        sh "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"
-                        sh "docker push dewantirani/simple-app:${env.BUILD_NUMBER}"
-                        sh "docker tag dewantirani/simple-app:${env.BUILD_NUMBER} dewantirani/simple-app:latest"
-                        sh "docker push dewantirani/simple-app:latest"
+                        bat "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"
+                        bat "docker push dewantirani/simple-app:%BUILD_NUMBER%"
+                        bat "docker tag dewantirani/simple-app:%BUILD_NUMBER% dewantirani/simple-app:latest"
+                        bat "docker push dewantirani/simple-app:latest"
                     }
                 }
             }
